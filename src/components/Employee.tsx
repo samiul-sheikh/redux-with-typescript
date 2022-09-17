@@ -21,3 +21,18 @@ const Contact = ({ name, email = "N/A" }: Ipeople) => {
 };
 
 export default Contact;
+
+export const EmployeeDemo: React.FC<Ipeople> = ({ name, email = "N/A" }) => {
+  return (
+    <div className="card">
+      <p>
+        <strong>Name: </strong>
+        {name}
+      </p>
+      <p>
+        <strong>Email: </strong>
+        {email}
+      </p>
+    </div>
+  );
+};
