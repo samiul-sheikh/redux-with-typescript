@@ -1,17 +1,34 @@
 import React, { useState } from "react";
-import Employee, { EmployeeDemo } from "./Employee";
+import Employee from "./Employee";
 
-const Contacts = () => {
-  const [employee, setEmployee] = useState("");
-  console.log(employee);
+interface IEmployee {
+  name: string;
+  email: string;
+}
 
-  const [employeeList, setEmployeeList] = useState<string[]>([]);
+const Employees = () => {
+  const [employee, setEmployee] = useState<IEmployee>({} as IEmployee);
+  // console.log(employee);
+
+  const [employeeList, setEmployeeList] = useState<IEmployee[]>([]);
 
   const displayEmployeeList = () => {
     setEmployeeList([...employeeList, employee]);
-    setEmployee("");
+    setEmployee({
+      name: "",
+      email: "",
+    });
   };
-  console.log(employeeList);
+  // console.log(employeeList);
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmployee({ ...employee, [e.target.name]: e.target.value });
+  };
+
+  const handleRemove = (email: string) => {
+    const newEmployeeList = employeeList.filter((e) => e.email === email);
+    setEmployeeList(newEmployeeList);
+  };
 
   return (
     <div>
@@ -21,18 +38,30 @@ const Contacts = () => {
           type="text"
           name="name"
           placeholder="Employee Name"
-          onChange={(e) => setEmployee(e.target.value)}
+          value={employee.name}
+          onChange={handleOnChange}
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Employee Email"
+          value={employee.email}
+          onChange={handleOnChange}
         />
         <button className="button" onClick={displayEmployeeList}>
           Add
         </button>
       </div>
-      {employeeList.map((singleEmployee) => (
-        <Employee key={singleEmployee} name={singleEmployee} />
+      {employeeList.map((emp) => (
+        <Employee
+          key={emp.name}
+          name={emp.name}
+          email={emp.email}
+          handleRemove={handleRemove}
+        />
       ))}
-      <EmployeeDemo name="Sami" />
     </div>
   );
 };
 
-export default Contacts;
+export default Employees;

@@ -2,10 +2,11 @@ import React from "react";
 
 interface Ipeople {
   name: string;
-  email?: string;
+  email: string;
+  handleRemove: (email: string) => void;
 }
 
-const Contact = ({ name, email = "N/A" }: Ipeople) => {
+const Employee = ({ name, email = "N/A", handleRemove }: Ipeople) => {
   return (
     <div className="card">
       <p>
@@ -16,11 +17,12 @@ const Contact = ({ name, email = "N/A" }: Ipeople) => {
         <strong>Email: </strong>
         {email}
       </p>
+      <button onClick={() => handleRemove(email)}>Remove</button>
     </div>
   );
 };
 
-export default Contact;
+export default Employee;
 
 export const EmployeeDemo: React.FC<Ipeople> = ({ name, email = "N/A" }) => {
   return (
